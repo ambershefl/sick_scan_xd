@@ -1049,6 +1049,15 @@ void sick_scansegment_xd::RosMsgpackPublisher::HandleMsgPackData(const sick_scan
 		//     << ", azimuth_range_collected=(" << precheck_min_azimuth_deg << "," << precheck_max_azimuth_deg << ")=" << (precheck_max_azimuth_deg - precheck_min_azimuth_deg)
 		//     << ", azimuth_range_configured=(" << m_all_segments_azimuth_min_deg << "," << m_all_segments_azimuth_max_deg << ")=" << (m_all_segments_azimuth_max_deg - m_all_segments_azimuth_min_deg)
 		//     << ", m_points_collector.allSegmentsCovered=" << publish_cloud_360);
+
+		ROS_INFO_STREAM(
+    	"segment=" << segment_idx
+    	<< ", telegram=" << telegram_cnt
+    	<< ", collector=" << m_points_collector.telegram_cnt
+		<< " m_points_cloud_collector=" << m_points_collector.total_point_count
+		<< "publish_cloud_360" << (publish_cloud_360 ? "true" : "false")
+		<< "Last_segment=" << m_points_collector.lastSegmentIdx());
+
 		if (m_points_collector.total_point_count <= 0 || m_points_collector.telegram_cnt <= 0 || publish_cloud_360 || m_points_collector.lastSegmentIdx() > segment_idx)
 		{
 			// 1. publish 360 degree point cloud if all segments collected
